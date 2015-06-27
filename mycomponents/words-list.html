@@ -1,0 +1,45 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../service/words-service.html">
+<link rel="import" href="../bower_components/core-signals/core-signals.html">
+<polymer-element name="words-list" attributes="show">
+  <template>
+    <style>
+    :host {
+      display: block;
+      width: 100%;
+    }
+    post-card {
+      margin-bottom: 30px;
+    }
+
+
+    </style>
+      
+      <words-service id="service" words="{{words}}"></words-service>
+      <core-menu>  
+
+      <template repeat="{{word in words}}">
+        
+          <core-item label="{{word.word}}" on-click="{{listItemClicked}}"></core-item>
+
+      </template>
+      </core-menu>
+  </template>
+
+  <script>
+  Polymer('words-list',{
+    ready:function(){
+      console.log();
+    },
+    listItemClicked:function(sender,e,f){
+      console.log(f.label);
+
+      document.querySelector('.content').innerHtml = f.label;
+      this.fire('word-selected',{word : f.label});
+      this.fire('core-signal', {name: "new-data", data: f.label});
+      
+    }
+  });
+  </script>
+  }
+</polymer-element>

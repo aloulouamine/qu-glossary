@@ -1,0 +1,30 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/core-ajax/core-ajax.html">
+
+<polymer-element name="words-service" attributes="words">
+  <template>
+    <style>
+    :host {
+      display: none;
+    }
+    </style>
+    <core-ajax id="ajax" 
+      auto
+      url="../api/get_words.php"
+      on-core-response="{{wordsLoaded}}"
+      handleAs="json">
+    </core-ajax>
+  </template>
+  <script>
+  Polymer('words-service', {
+    created: function() {
+      this.words = [];
+      console.log("service words created");
+    },
+    wordsLoaded: function() {
+      // Make a copy of the loaded data
+      this.words = this.$.ajax.response.slice(0);
+    }
+    });
+  </script>
+</polymer-element>

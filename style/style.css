@@ -1,0 +1,25 @@
+body{
+	font-family: sans-serif;
+
+}
+core-header-panel {
+	
+}
+core-toolbar {
+	background: #0091EA;
+	color: #FFFFFF;
+}
+
+[main]{
+	background-color: #F9F9F9;
+}
+
+[drawer]{
+	background-color: #FFFFFF;
+}
+core-drawer-panel:not([narrow]) #navicon{
+	display: none;
+}
+.x{
+	height: 900px;
+}

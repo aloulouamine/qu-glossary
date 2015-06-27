@@ -1,0 +1,54 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/core-ajax/core-ajax.html">
+
+<polymer-element name="word-definition">
+  <template>
+    <style>
+    :host {
+      display: block;
+      width: 100%;
+    }
+    post-card {
+      margin-bottom: 30px;
+    }
+
+
+    </style>
+    
+     <core-signals on-core-signal-new-data="{{newData}}"></core-signals>
+
+
+    <core-ajax id="ajax"
+      auto
+      url="../api/get_definition.php"
+      params='{"word":"Administrator"}'
+      on-core-response="{{defsLoaded}}"
+      on-core-error="{{theirIsAnError}}"
+      handleAs="json">
+    </core-ajax>
+
+
+     <content>
+      <h1>{{labelTitle}}</h1>
+
+
+     </content>
+
+  </template>
+
+  <script>
+  Polymer('word-detail',{
+    ready:function(){
+      this.word="";
+      this.labelTitle="Select a word";
+      this.ajax = document.querySelector("#ajax");
+    },
+
+    defsLoaded:function(){
+      console.log("defs loaded");
+    }
+
+  });
+  </script>
+  }
+</polymer-element>

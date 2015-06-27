@@ -1,0 +1,74 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/core-signals/core-signals.html">
+<link rel="import" href="../service/definitions-service.html">
+<link rel="import" href="post-card.html">
+<polymer-element name="word-detail" attributes="show">
+  <template>
+    <style>
+    :host {
+      display: block;
+      width: 100%;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+    post-card {
+      
+      margin-bottom: 30px;
+    }
+
+
+    </style>
+
+
+
+     <core-ajax id="ajax"
+      url="../api/get_definition.php"
+      params='{"word":"{{word}}"}'
+      on-core-response="{{defsLoaded}}"
+      handleAs="json">
+    </core-ajax>
+
+    
+     <core-signals on-core-signal-new-data="{{newData}}"></core-signals>
+     <content>
+
+     
+      <h1>{{labelTitle}}</h1>
+      <template repeat="{{definition in definitions}}">
+
+          <post-card>
+            <img src="../images/{{definition.img}}" width="70" height="70">
+            <h2>{{definition.name}}</h2>
+            <p>{{definition.definition}}</p>
+          </post-card>
+      </template>
+     </content>
+
+
+  </template>
+
+  <script>
+  Polymer('word-detail',{
+    rand:Math.floor((Math.random() * 9) + 1),
+    word: String,
+    ready:function(){
+      this.labelTitle="Select a word";
+      
+
+    },
+
+    newData: function(e, detail, sender) {
+        console.log("Hola ! got your message : "+detail);
+        this.labelTitle=detail;
+        this.word=detail;
+        this.$.ajax.go();
+      },
+    defsLoaded: function(){
+      this.definitions = this.$.ajax.response.slice(0);
+      console.log(this.definitions);
+      this.rand=Math.floor((Math.random() * 9) + 1);
+    }
+  });
+  </script>
+  }
+</polymer-element>
